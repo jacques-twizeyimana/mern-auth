@@ -15,12 +15,7 @@ function isAuthenticated(req, res, next) {
   if (!token)
     return res
       .status(200)
-      .send(
-        createError(
-          401,
-          "This service is for authorised users only.plz got to login to access it"
-        )
-      );
+      .send(createError(401, "This service is for authorised users only."));
 
   try {
     const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
