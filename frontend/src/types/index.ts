@@ -23,3 +23,15 @@ export interface ResetDto {
   password: string;
   confirmPassword: string;
 }
+
+export interface Response<T> {
+  success: boolean;
+  message: string;
+  code?: number;
+  data: T;
+}
+
+export interface Table {
+  _id: string;
+  createdAt: string;
+}
