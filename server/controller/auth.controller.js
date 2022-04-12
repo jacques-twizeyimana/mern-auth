@@ -30,8 +30,8 @@ router.post("/login", async (req, res) => {
     success: true,
     token,
     user: _.pick(user, [
-      "fname",
-      "lname",
+      "firstName",
+      "lastName",
       "email",
       "_id",
       "isAdmin",
