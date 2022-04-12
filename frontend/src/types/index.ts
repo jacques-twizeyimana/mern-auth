@@ -6,3 +6,14 @@ export interface ValueType<T = Event> {
   label?: string;
   event?: FormEvent<T>;
 }
+
+
+export interface LoginDto {
+  email: string;
+  password: string;
+}
+
+export interface SignupDto extends LoginDto {
+  firstName: string;
+  lastName: string;
+}

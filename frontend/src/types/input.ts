@@ -5,6 +5,6 @@ export interface InputProps<T> {
   name: string;
   value?: string | number;
   label?: string;
-  type: string;
+  type?: string;
   full?: boolean;
 }

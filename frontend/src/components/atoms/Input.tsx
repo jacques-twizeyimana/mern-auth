@@ -12,7 +12,7 @@ export default function Input<T>({
         {label}
       </label>
       <input
-        type={type}
+        type={type || "text"}
         className="border border-gray-600 rounded text-base h-12 block w-full focus:outline-none px-3"
         {...attr}
       />

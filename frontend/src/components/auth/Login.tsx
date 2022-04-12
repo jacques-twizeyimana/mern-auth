@@ -1,6 +1,17 @@
+import { useState } from "react";
+import { LoginDto, ValueType } from "../../types";
 import Input from "../atoms/Input";
 
 export default function Login() {
+  const [values, setvalues] = useState<LoginDto>({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(e: ValueType) {
+    setvalues((val) => ({ ...val, [e.name]: e.value }));
+  }
+
   return (
     <div className="max-w-lg border-2 shadow-md rounded-lg mx-auto my-20 py-8 px-10">
       <h2 className="py-4 px-1 text-3xl text-gray-800 font-bold">
@@ -8,15 +19,15 @@ export default function Login() {
       </h2>
       <form action="" className="py-4">
         <Input
-          handleChange={(e) => {}}
-          name={"email"}
-          type={"email"}
+          handleChange={handleChange}
+          name="email"
+          type="email"
           label="Email address"
         />
         <Input
-          handleChange={(e) => {}}
-          name={"password"}
-          type={"password"}
+          handleChange={handleChange}
+          name="password"
+          type="password"
           label="Password"
         />
         <div className="py-4">
