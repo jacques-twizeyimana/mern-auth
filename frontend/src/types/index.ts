@@ -17,3 +17,9 @@ export interface SignupDto extends LoginDto {
   firstName: string;
   lastName: string;
 }
+
+export interface ResetDto {
+  code: string;
+  password: string;
+  confirmPassword: string;
+}

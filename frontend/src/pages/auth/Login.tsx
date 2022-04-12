@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LoginDto, ValueType } from "../../types";
 import Input from "../../components/atoms/Input";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [values, setvalues] = useState<LoginDto>({
@@ -30,6 +31,11 @@ export default function Login() {
           type="password"
           label="Password"
         />
+        <p className="text-right pb-4">
+          <Link to="/auth/forgot-password" className="text-blue-500">
+            Forgot password?
+          </Link>
+        </p>
         <div className="py-4">
           <button className="block w-full py-3 text-base rounded text-center px-4 bg-gray-800 text-white">
             Login
