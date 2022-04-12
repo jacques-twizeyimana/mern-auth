@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LoginDto, ValueType } from "../../types";
-import Input from "../atoms/Input";
+import Input from "../../components/atoms/Input";
 
 export default function Login() {
   const [values, setvalues] = useState<LoginDto>({

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SignupDto, ValueType } from "../../types";
-import Input from "../atoms/Input";
+import Input from "../../components/atoms/Input";
 
 export default function Register() {
   const [values, setvalues] = useState<SignupDto>({
