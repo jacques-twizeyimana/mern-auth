@@ -1,5 +1,7 @@
+import { UserInfo } from "./users.types";
+
 export interface LoginRes {
-  username: string;
+  user: UserInfo;
   token: string;
 }
 

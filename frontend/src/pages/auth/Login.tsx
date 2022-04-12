@@ -25,7 +25,7 @@ export default function Login() {
       if (resp.data.success) {
         toast.success("Successfully logged in");
         navigate("/auth/profile");
-        localStorage.setItem("auth_token", resp.data.data.token);
+        localStorage.setItem("auth_token", JSON.stringify(resp.data.data));
       } else toast.error(resp.data.message);
     } catch (error) {
       toast.error("Failed to login");

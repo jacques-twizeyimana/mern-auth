@@ -30,7 +30,6 @@ router.post("/login", async (req, res) => {
   let token = generateAuthToken(user);
   return res.send(
     createSuccess({
-      success: true,
       token,
       user: _.pick(user, [
         "firstName",
