@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios";
-import { CreateUserInfo, UserInfo } from "../types/services/users.types";
+import { UserInfo } from "../types/services/users.types";
 import { customAxios } from "./axios";
-import { Response } from "../types";
+import { Response, SignupDto } from "../types";
 
 class UsersService {
   public async register(
-    data: CreateUserInfo
+    data: SignupDto
   ): Promise<AxiosResponse<Response<UserInfo>>> {
-    return await customAxios.post("/auth/login", data);
+    return await customAxios.post("/users", data);
   }
 }
 

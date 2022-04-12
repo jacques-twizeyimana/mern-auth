@@ -1,8 +1,8 @@
 import { Table } from "..";
 
 interface BasicUserInfo {
-  fname: string;
-  lname: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
