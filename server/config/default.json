@@ -1,0 +1,11 @@
+{
+  "jwtPrivateKey": "HgV_jwtPrivate56GH_!Key",
+  "author": "Jacques Sandberg",
+  "website": "www.jsandberg.dev",
+  "APP_DETAILS": {
+    "app": "Mern auth",
+    "version": "1.0",
+    "gateway": "/api/v1",
+    "developer": "Jacques Sandberg - www.jacquestzy.dev"
+  }
+}
