@@ -1,7 +1,9 @@
 const Joi = require("joi");
 const _ = require("lodash");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const config = require("config");
 
 const User = require("../model/user.model.js");
 const { createError, createSuccess } = require("../utils/htpp-response");
@@ -23,26 +25,32 @@ router.post("/login", async (req, res) => {
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
-    return res.send(createError(400, "Incorrect email or password"));
+    return res.send(createError(400, "Incorrect email or password "));
 
   let token = generateAuthToken(user);
-  return res.send({
-    success: true,
-    token,
-    user: _.pick(user, [
-      "firstName",
-      "lastName",
-      "email",
-      "_id",
-      "isAdmin",
-      "createdAt",
-    ]),
-  });
+  return res.send(
+    createSuccess({
+      success: true,
+      token,
+      user: _.pick(user, [
+        "firstName",
+        "lastName",
+        "email",
+        "_id",
+        "isAdmin",
+        "createdAt",
+      ]),
+    })
+  );
 });
 
 router.get("/current", isAuthenticated, (req, res) => {
   return res.send(createSuccess(req.user));
 });
+
+function generateAuthToken(user) {
+  return jwt.sign({ user }, config.get("jwtPrivateKey"));
+}
 
 
 module.exports = router;

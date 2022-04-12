@@ -146,8 +146,4 @@ function validateUser(user) {
   return schema.validate(user);
 }
 
-function generateAuthToken(user) {
-  return jwt.sign({ user }, config.get("jwtPrivateKey"));
-}
-
 module.exports = router;

@@ -2,6 +2,9 @@ import { useState } from "react";
 import { LoginDto, ValueType } from "../../types";
 import Input from "../../components/atoms/Input";
 import { Link } from "react-router-dom";
+import { authenticatorService } from "../../services/auth.service";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [values, setvalues] = useState<LoginDto>({
@@ -13,12 +16,29 @@ export default function Login() {
     setvalues((val) => ({ ...val, [e.name]: e.value }));
   }
 
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const resp = await authenticatorService.login(values);
+      if (resp.data.success) {
+        toast.success("Successfully logged in");
+        navigate("/auth/profile");
+        localStorage.setItem("auth_token", resp.data.data.token);
+      } else toast.error(resp.data.message);
+    } catch (error) {
+      toast.error("Failed to login");
+      console.error(error);
+    }
+  };
+
   return (
     <div className="max-w-lg border-2 shadow-md rounded-lg mx-auto my-20 py-8 px-10">
       <h2 className="py-4 px-1 text-3xl text-gray-800 font-bold">
         Login to continue
       </h2>
-      <form action="" className="py-4">
+      <form onSubmit={handleSubmit} className="py-4">
         <Input
           handleChange={handleChange}
           name="email"
