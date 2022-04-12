@@ -8,7 +8,7 @@ export default function Input<T>({
 }: InputProps<T>) {
   return (
     <div className="py-2">
-      <label htmlFor="" className="block text-lg pb-1">
+      <label htmlFor="" className="block text-base pb-1">
         {label}
       </label>
       <input
