@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const commonConfig: AxiosRequestConfig = {};
-const BASE_URL = "http://localhost:5000/api/";
+const BASE_URL = "http://localhost:5000/api/v1/";
 
 const axiosConfig: AxiosRequestConfig = {
   ...commonConfig,
