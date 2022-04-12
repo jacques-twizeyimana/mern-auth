@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 function App() {
   return (
@@ -11,10 +12,9 @@ function App() {
         <Navbar />
         <Routes>
           {/* <Route index element={<Home />} /> */}
-          <Route path="auth" element={<Login />}>
+          <Route path="auth">
             <Route path="login" element={<Login />} />
-            {/* <Route path="new" element={<NewTeamForm />} />
-            // <Route index element={<LeagueStandings />} /> */}
+            <Route path="register" element={<Register />} />
           </Route>
         </Routes>
       </BrowserRouter>
