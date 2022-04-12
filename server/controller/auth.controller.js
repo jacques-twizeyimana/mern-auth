@@ -43,3 +43,6 @@ router.post("/login", async (req, res) => {
 router.get("/current", isAuthenticated, (req, res) => {
   return res.send(createSuccess(req.user));
 });
+
+
+module.exports = router;

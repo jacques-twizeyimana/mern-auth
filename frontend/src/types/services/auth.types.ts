@@ -1,12 +1,3 @@
-import { Table } from "..";
-
-export interface UserInfo extends Table {
-  fname: string;
-  lname: string;
-  email: string;
-  isAdmin: boolean;
-}
-
 export interface LoginRes {
   username: string;
   token: string;

@@ -5,8 +5,8 @@ import {
   InitiateResetPassword,
   LoginRes,
   ResetPassword,
-  UserInfo,
 } from "../types/services/auth.types";
+import { UserInfo } from "../types/services/users.types";
 import { customAxios } from "./axios";
 
 class AuthenticatorService {
