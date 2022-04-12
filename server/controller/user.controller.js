@@ -7,7 +7,7 @@ const config = require("config");
 
 const User = require("../model/user.model.js");
 const { hashPassword } = require("../utils/password");
-const { createError } = require("../utils/htpp-response");
+const { createError, createSuccess } = require("../utils/htpp-response");
 const {
   isAuthenticated,
   isAdmin,
@@ -15,7 +15,7 @@ const {
 
 var router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", isAuthenticated, isAdmin, async (req, res) => {
   const users = await User.find().select(
     "_id fname lname email isAdmin createdAt"
   );
@@ -33,8 +33,6 @@ router.get("/:id", (req, res) => {
       res.send(createError(500, err.message || "Internal server error"));
     });
 });
-
-Joi.valid();
 
 router.get("/email/:email", async (req, res) => {
   const user = await User.findOne({ email: req.params.email });
@@ -110,37 +108,6 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
     .catch((err) => {
       return res.send(createError(404, "User not found"));
     });
-});
-
-router.post("/login", async (req, res) => {
-  let schema = Joi.object({
-    email: Joi.string().min(5).max(70).required().email(),
-    password: Joi.string().min(5).max(70).required(),
-  });
-
-  const { error } = schema.validate(req.body);
-  if (error) return res.send(createError(400, error.details[0].message));
-
-  let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.send(createError(400, "Incorrect email or password"));
-
-  const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validPassword)
-    return res.send(createError(400, "Incorrect email or password"));
-
-  let token = generateAuthToken(user);
-  return res.send({
-    success: true,
-    token,
-    user: _.pick(user, [
-      "fname",
-      "lname",
-      "email",
-      "_id",
-      "isAdmin",
-      "createdAt",
-    ]),
-  });
 });
 
 function validateUser(user) {
