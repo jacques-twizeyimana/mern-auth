@@ -9,6 +9,7 @@ specifiers:
   postcss: ^8.4.12
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-hot-toast: ^2.2.0
   react-router-dom: ^6.3.0
   tailwindcss: ^3.0.23
   typescript: ^4.5.4
@@ -18,6 +19,7 @@ dependencies:
   axios: 0.26.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-hot-toast: 2.2.0_react-dom@17.0.2+react@17.0.2
   react-router-dom: 6.3.0_react-dom@17.0.2+react@17.0.2
 
 devDependencies:
@@ -913,6 +915,12 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /goober/2.1.8:
+    resolution: {integrity: sha512-S0C85gCzcfFCMSdjD/CxyQMt1rbf2qEg6hmDzxk2FfD7+7Ogk55m8ZFUMtqNaZM4VVX/qaU9AzSORG+Gf4ZpAQ==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
+
   /has-flag/3.0.0:
     resolution: {integrity: sha1-tdRU3CGZriJWmfNGfloH87lVuv0=}
     engines: {node: '>=4'}
@@ -1175,6 +1183,20 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
+    dev: false
+
+  /react-hot-toast/2.2.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-248rXw13uhf/6TNDVzagX+y7R8J183rp7MwUMNkcrBRyHj/jWOggfXTGlM8zAOuh701WyVW+eUaWG2LeSufX9g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.8
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - csstype
     dev: false
 
   /react-refresh/0.11.0:

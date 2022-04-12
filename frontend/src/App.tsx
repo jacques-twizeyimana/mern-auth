@@ -7,10 +7,12 @@ import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ToasterMolecule from "./plugins/Toaster";
 
 function App() {
   return (
     <div className="App">
+      <ToasterMolecule />
       <BrowserRouter>
         <Navbar />
         <Routes>
