@@ -3,10 +3,15 @@ const jwt = require("jsonwebtoken");
 const { createError } = require("../htpp-response");
 
 function isAdmin(req, res, next) {
-  if (req.user.isAdmin === false)
+  if (!req.user.isAdmin)
     return res
-      .status(403)
-      .send("Access Denied for this user.This is for authorized admins only.");
+      .status(401)
+      .send(
+        createError(
+          401,
+          "Access Denied for this user.This is for authorized admins only."
+        )
+      );
   else next();
 }
 
@@ -14,7 +19,7 @@ function isAuthenticated(req, res, next) {
   const token = req.header("x-auth-token");
   if (!token)
     return res
-      .status(200)
+      .status(401)
       .send(createError(401, "This service is for authorised users only."));
 
   try {
@@ -22,11 +27,9 @@ function isAuthenticated(req, res, next) {
     req.user = decoded.user;
     next();
   } catch (err) {
-    return res
-      .status(200)
-      .send(
-        createError(400, "Your session data was destroyed. go to login again")
-      );
+    return res.send(
+      createError(400, "Your session data was destroyed. go to login again")
+    );
   }
 }
 
