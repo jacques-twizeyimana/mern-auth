@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
+import { LoginRes } from "../types/services/auth.types";
 
-const links = [
+let links = [
   { text: "Home", to: "/" },
   { text: "Login", to: "/auth/login" },
   { text: "Sign up", to: "/auth/register" },
@@ -8,6 +9,15 @@ const links = [
 
 export default function Navbar() {
   const location = useLocation();
+
+  let jwt: LoginRes | null = JSON.parse(
+    localStorage.getItem("auth_token") || "{}"
+  );
+  let user = jwt?.user;
+  // if user, remove login and signup links
+  if (user) {
+    console.log(links.pop());
+  }
 
   const activeClass = "text-white bg-gray-900";
   const inactiveClass = "text-gray-300 hover:text-white hover:bg-gray-700";
@@ -31,6 +41,7 @@ export default function Navbar() {
             </Link>
           ))}
         </div>
+        
       </div>
     </div>
   );

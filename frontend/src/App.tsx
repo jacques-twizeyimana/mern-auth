@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ToasterMolecule from "./plugins/Toaster";
+import Profile from "./pages/auth/Profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="reset" element={<ResetPassword />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>
