@@ -5,6 +5,7 @@
 #### publicly editable section
 ![image](https://user-images.githubusercontent.com/51080275/163158925-edfa3ba1-0492-4617-b741-ee9bc43777c3.png)
 ### Signup page
-![image](https://user-images.githubusercontent.com/51080275/163159055-5dbac4ef-48e7-4ebb-b3dd-c9a1a4079ccd.png)
+![image](https://user-images.githubusercontent.com/51080275/163159552-53ee4eee-1d59-43b4-a529-8e6d17480d86.png)
+
 ### Login 
 ![image](https://user-images.githubusercontent.com/51080275/163159147-3a9f1535-b51c-485d-83ef-c7b984ff366f.png)
