@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { LoginRes } from "../types/services/auth.types";
 
 const commonConfig: AxiosRequestConfig = {};
-const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = "https://mern-auth-test-backend.herokuapp.com/api/v1/";
 
 const interceptAdminReq = (config: AxiosRequestConfig) => {
   const token = localStorage.getItem("auth_token");
