@@ -5,7 +5,7 @@ import { LoginRes } from "../types/services/auth.types";
 let links = [];
 
 export default function Navbar() {
-  const [isMenuOpen, setisMenuOpen] = useState(true);
+  const [isMenuOpen, setisMenuOpen] = useState(false);
   const location = useLocation();
 
   let jwt: LoginRes | null = JSON.parse(
