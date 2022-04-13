@@ -20,9 +20,11 @@ export default function Home() {
     textService
       .updateText({ content: draftText })
       .then((resp) => {
-        setisEditing(false);
-        toast.success("Successfully saved");
-        setPublicText(resp.data.data);
+        if (resp.data.success) {
+          setisEditing(false);
+          toast.success("Successfully saved");
+          setPublicText(resp.data.data);
+        } else toast.error(resp.data.message);
       })
       .catch((err) => toast.error(err.message || "Failed to save"));
   };

@@ -23,9 +23,11 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await userService.register(values);
-      toast.success("Successfully registered");
-      navigate("/auth/login");
+      const resp = await userService.register(values);
+      if (resp.data.success) {
+        toast.success("Successfully registered");
+        navigate("/auth/login");
+      } else toast.error(resp.data.message);
     } catch (error) {
       toast.error("Failed to register");
       console.error(error);

@@ -30,7 +30,7 @@ router.put("/", async (req, res) => {
 
 function validateText(body) {
   const schema = Joi.object({
-    content: Joi.string().max(255).min(3).required(),
+    content: Joi.string().max(1000).min(10).required(),
     lastUpdatedBy: Joi.string().max(255).min(3),
   });
   return schema.validate(body);
