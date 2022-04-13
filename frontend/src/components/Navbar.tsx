@@ -2,12 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LoginRes } from "../types/services/auth.types";
 
-let links = [
-  { text: "Home", to: "/" },
-  { text: "Login", to: "/auth/login" },
-  { text: "Sign up", to: "/auth/register" },
-  { text: "Profile", to: "/auth/profile" },
-];
+let links = [];
 
 export default function Navbar() {
   const [isMenuOpen, setisMenuOpen] = useState(true);
@@ -17,6 +12,19 @@ export default function Navbar() {
     localStorage.getItem("auth_token") || "{}"
   );
   let user = jwt?.user;
+  if (user) {
+    links = [
+      { text: "Home", to: "/" },
+      { text: "Profile", to: "/auth/profile" },
+      { text: "Logout", to: "/auth/logout" },
+    ];
+  } else {
+    links = [
+      { text: "Login", to: "/auth/login" },
+      { text: "Sign up", to: "/auth/register" },
+      { text: "Profile", to: "/auth/profile" },
+    ];
+  }
 
   const activeClass = "text-white bg-gray-900";
   const inactiveClass = "text-gray-300 hover:text-white hover:bg-gray-700";
