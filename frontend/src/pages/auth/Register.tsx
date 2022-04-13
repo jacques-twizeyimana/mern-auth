@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SignupDto, ValueType } from "../../types";
 import Input from "../../components/atoms/Input";
-import { usersService } from "../../services/users.services";
+import { userService } from "../../services/user.service";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await usersService.register(values);
+      await userService.register(values);
       toast.success("Successfully registered");
       navigate("/auth/login");
     } catch (error) {

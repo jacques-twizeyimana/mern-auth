@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { textService } from "../services/text.service";
+import { ITextInfo } from "../types/services/text.types";
 
 export default function Home() {
-  const [draftText, setDraftText] = useState("");
-  const [publicText, setPublicText] = useState("");
+  const [draftText, setDraftText] = useState<string>("");
+  const [publicText, setPublicText] = useState<ITextInfo | undefined>();
   const [isEditing, setisEditing] = useState(false);
 
   useEffect(() => {
-    setDraftText(publicText);
+    setDraftText(publicText?.content || "");
   }, [publicText]);
 
   useEffect(() => {
-    setPublicText(`Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-      voluptatum quisquam voluptatibus expedita excepturi autem aperiam minus
-      deserunt laborum illum. Velit deserunt rerum, dolorum hic autem nobis
-      odit? Accusamus, et?`);
+    textService.getText().then((resp) => setPublicText(resp.data.data));
   }, []);
 
   const handleSave = () => {
-    setisEditing(false);
-    setPublicText(draftText);
+    textService
+      .updateText({ content: draftText })
+      .then((resp) => {
+        setisEditing(false);
+        toast.success("Successfully saved");
+        setPublicText(resp.data.data);
+      })
+      .catch((err) => toast.error(err.message || "Failed to save"));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // @ts-ignore
+    setDraftText({ ...draftText, content: e.target.value });
   };
 
   return (
@@ -47,7 +58,7 @@ export default function Home() {
           isEditing ? "hidden" : "block"
         } text-2xl lg:text-3xl italic text-gray-500 tracking-wide`}
       >
-        {publicText}
+        {publicText?.content}
       </p>
       <div className={`${isEditing ? "block" : "hidden"}`}>
         <textarea
