@@ -11,6 +11,7 @@ import ToasterMolecule from "./plugins/Toaster";
 import Profile from "./pages/auth/Profile";
 import { UserContextProvider } from "./store/usercontext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Logout from "./pages/auth/Logout";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="auth">
               <Route path="login" element={<Login />} />
+              <Route path="logout" element={<Logout />} />
               <Route path="register" element={<Register />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="reset" element={<ResetPassword />} />
