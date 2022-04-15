@@ -1,12 +1,17 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Input from "../../components/atoms/Input";
+import { authenticatorService } from "../../services/auth.service";
 import { ValueType } from "../../types";
 
 export default function ForgotPassword() {
+  const [isLoading, setisLoading] = useState(false);
   const [values, setvalues] = useState({
     email: "",
   });
+
+  const navigate = useNavigate();
 
   function handleChange(e: ValueType) {
     setvalues((val) => ({ ...val, [e.name]: e.value }));
@@ -14,6 +19,19 @@ export default function ForgotPassword() {
 
   const handleForgot = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setisLoading(true);
+    authenticatorService
+      .forgotPassword({ email: values.email })
+      .then((resp) => {
+        if (resp.data.success) {
+          toast.success("We have sent reset code to yur email");
+          navigate("/auth/reset");
+        } else toast.error(resp.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.message || "Error occurred");
+      })
+      .finally(() => setisLoading(false));
     localStorage.setItem("reset_email", values.email);
   };
 
@@ -31,7 +49,11 @@ export default function ForgotPassword() {
         />
         <div className="py-4">
           <button className="block w-full py-3 text-base rounded text-center px-4 bg-gray-800 text-white">
-            Send code
+            {isLoading ? (
+              <img src="/gif/rolling.gif" className="h-8 mx-auto" />
+            ) : (
+              "Send code"
+            )}
           </button>
         </div>
       </form>

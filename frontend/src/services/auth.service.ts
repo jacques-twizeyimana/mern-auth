@@ -27,14 +27,16 @@ class AuthenticatorService {
     return await customAxios.post("/auth/changePassword", changePassword);
   }
 
-  public async forgotPassword(initiateResetPassword: InitiateResetPassword) {
+  public async forgotPassword(
+    initiateResetPassword: InitiateResetPassword
+  ): Promise<AxiosResponse<Response<UserInfo>>> {
     return await customAxios.post(
-      "/auth/initiatePasswordReset",
+      "/auth/initiate-reset",
       initiateResetPassword
     );
   }
   public async passwordReset(resetPassword: ResetPassword) {
-    return await customAxios.post("/auth/resetPassword", resetPassword);
+    return await customAxios.post("/auth/reset-password", resetPassword);
   }
 }
 
