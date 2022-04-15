@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../../store/usercontext";
 
 export default function Login() {
+  const [isLoading, setisLoading] = useState(false);
   const [values, setvalues] = useState<LoginDto>({
     email: "",
     password: "",
@@ -24,6 +25,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setisLoading(true);
     try {
       const resp = await authenticatorService.login(values);
       if (resp.data.success) {
@@ -36,6 +38,8 @@ export default function Login() {
     } catch (error) {
       toast.error("Failed to login");
       console.error(error);
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -64,7 +68,11 @@ export default function Login() {
         </p>
         <div className="py-4">
           <button className="block w-full py-3 text-base rounded text-center px-4 bg-gray-800 text-white">
-            Login
+            {isLoading ? (
+              <img src="/gif/rolling.gif" className="h-8 mx-auto" />
+            ) : (
+              "Login"
+            )}
           </button>
         </div>
       </form>

@@ -22,6 +22,7 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setisSaving(true);
     try {
       const resp = await userService.register(values);
       if (resp.data.success) {
@@ -65,7 +66,11 @@ export default function Register() {
             disabled={isSaving}
             className="block w-full py-3 text-base rounded text-center px-4 bg-gray-800 text-white"
           >
-            Sign up
+            {isSaving ? (
+              <img src="/gif/rolling.gif" className="h-8 mx-auto" />
+            ) : (
+              "Sign up"
+            )}
           </button>
         </div>
       </form>
