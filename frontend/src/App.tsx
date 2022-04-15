@@ -10,6 +10,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import ToasterMolecule from "./plugins/Toaster";
 import Profile from "./pages/auth/Profile";
 import { UserContextProvider } from "./store/usercontext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -25,7 +26,14 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="reset" element={<ResetPassword />} />
-              <Route path="profile" element={<Profile />} />
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </BrowserRouter>

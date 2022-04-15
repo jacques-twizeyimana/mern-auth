@@ -9,6 +9,6 @@ interface IProps {
 export default function ProtectedRoute({ children }: IProps) {
   const { user } = useContext(UserContext);
 
-  if (user && user._id) return { children };
+  if (user && user._id) return <div>{children}</div>;
   else return <Navigate to="/auth/login" replace />;
 }
