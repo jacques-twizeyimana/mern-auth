@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LoginDto, ValueType } from "../../types";
 import Input from "../../components/atoms/Input";
 import { Link } from "react-router-dom";
 import { authenticatorService } from "../../services/auth.service";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../store/usercontext";
 
 export default function Login() {
   const [values, setvalues] = useState<LoginDto>({
     email: "",
     password: "",
   });
+
+  const { changeUser } = useContext(UserContext);
+  console.log(changeUser);
 
   function handleChange(e: ValueType) {
     setvalues((val) => ({ ...val, [e.name]: e.value }));
@@ -23,6 +27,8 @@ export default function Login() {
     try {
       const resp = await authenticatorService.login(values);
       if (resp.data.success) {
+        // update user in store
+        changeUser(resp.data.data);
         toast.success("Successfully logged in");
         navigate("/auth/profile");
         localStorage.setItem("auth_token", JSON.stringify(resp.data.data));

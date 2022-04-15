@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LoginRes } from "../types/services/auth.types";
+import UserContext from "../store/usercontext";
 
 let links = [];
 
@@ -8,10 +8,8 @@ export default function Navbar() {
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const location = useLocation();
 
-  let jwt: LoginRes | null = JSON.parse(
-    localStorage.getItem("auth_token") || "{}"
-  );
-  let user = jwt?.user;
+  const { user } = useContext(UserContext);
+
   if (user) {
     links = [
       { text: "Home", to: "/" },
@@ -22,7 +20,6 @@ export default function Navbar() {
     links = [
       { text: "Login", to: "/auth/login" },
       { text: "Sign up", to: "/auth/register" },
-      { text: "Profile", to: "/auth/profile" },
     ];
   }
 

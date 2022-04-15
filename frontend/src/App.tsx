@@ -9,24 +9,27 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ToasterMolecule from "./plugins/Toaster";
 import Profile from "./pages/auth/Profile";
+import { UserContextProvider } from "./store/usercontext";
 
 function App() {
   return (
     <div className="App">
       <ToasterMolecule />
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="auth">
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="reset" element={<ResetPassword />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserContextProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="auth">
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="reset" element={<ResetPassword />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
     </div>
   );
 }

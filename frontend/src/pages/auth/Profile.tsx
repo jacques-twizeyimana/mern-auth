@@ -1,10 +1,8 @@
-import { LoginRes } from "../../types/services/auth.types";
+import { useContext } from "react";
+import UserContext from "../../store/usercontext";
 
 export default function Profile() {
-  let jwt: LoginRes | null = JSON.parse(
-    localStorage.getItem("auth_token") || "{}"
-  );
-  let user = jwt?.user;
+  const { user, logout } = useContext(UserContext);
 
   return (
     <div className="shadow-md w-10/12 md:w-2/3 lg:w-1/2  rounded-lg my-10 mx-auto">
@@ -32,7 +30,10 @@ export default function Profile() {
           ).toDateString()}`}
         </p>
         <div className="py-6">
-          <button className="border border-gray-800 rounded py-3 px-8 text-base">
+          <button
+            onClick={logout}
+            className="border border-gray-800 rounded py-3 px-8 text-base"
+          >
             Logout
           </button>
         </div>
