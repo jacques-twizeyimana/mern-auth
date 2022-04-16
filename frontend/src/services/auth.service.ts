@@ -16,6 +16,12 @@ class AuthenticatorService {
     return await customAxios.post("/auth/login", loginInfo);
   }
 
+  public async changeProfilePic(
+    data: FormData
+  ): Promise<AxiosResponse<Response<UserInfo>>> {
+    return await customAxios.put("/auth/change-profile", data);
+  }
+
   public async authUser(): Promise<AxiosResponse<Response<UserInfo>>> {
     return await customAxios.get("/auth/current");
   }

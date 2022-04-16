@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../services/axios";
 import UserContext from "../../store/usercontext";
 
 export default function Profile() {
@@ -9,7 +10,7 @@ export default function Profile() {
     <div className="shadow-md w-10/12 md:w-2/3 lg:w-1/2  rounded-lg my-10 mx-auto">
       <div className="bg-gray-900 rounded-t-lg py-2 relative">
         <img
-          src="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
+          src={BASE_URL + user?.profileImage}
           alt="Profile picture"
           className="w-20 h-20 rounded-full block mx-auto object-cover"
         />

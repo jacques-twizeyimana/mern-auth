@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../../components/atoms/ImageUploader";
 import Input from "../../components/atoms/Input";
+import { authenticatorService } from "../../services/auth.service";
 import { BASE_URL } from "../../services/axios";
 import { userService } from "../../services/user.service";
 import UserContext from "../../store/usercontext";
@@ -34,14 +35,34 @@ export default function EditProfile() {
       const resp = await userService.editProfile(values);
       if (resp.data.success) {
         toast.success("Successfully updated data");
-        navigate("/auth/profile");
         updateUser({ ...user, ...resp.data.data });
+        await changeImage();
+        navigate("/auth/profile");
       } else toast.error(resp.data.message);
     } catch (err) {
       // @ts-ignore
       toast.error(err.message || "Failed to updated profile.");
     } finally {
       setisSaving(false);
+    }
+  };
+
+  const changeImage = async () => {
+    if (profileImage) {
+      let formData = new FormData();
+      formData.append("image", profileImage);
+      try {
+        const resp = await authenticatorService.changeProfilePic(formData);
+        if (resp.data.success) {
+          console.log("====================================");
+          console.log(resp.data.data);
+          console.log("====================================");
+          toast.success("Successfully updated profile image");
+          updateUser({ ...user, ...resp.data.data });
+        } else toast.error(resp.data.message);
+      } catch (err) {
+        toast.error("Failed to updated profile image.");
+      }
     }
   };
 
