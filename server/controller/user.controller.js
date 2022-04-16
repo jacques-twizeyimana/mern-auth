@@ -103,7 +103,7 @@ router.put("/", isAuthenticated, async (req, res) => {
   // let hashedPswd = await hashPassword(req.body.password);
   // req.body.password = hashedPswd;
 
-  User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: false })
+  User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true })
     .then((user) =>
       res.send(
         createSuccess(

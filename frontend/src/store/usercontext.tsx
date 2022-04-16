@@ -8,7 +8,8 @@ interface IProviderProps {
 
 interface IUserContext {
   user: UserInfo | undefined;
-  changeUser: (data: LoginRes) => void;
+  login: (data: LoginRes) => void;
+  updateUser: (data: UserInfo) => void;
   logout: () => void;
 }
 
@@ -25,9 +26,13 @@ function getUserFromSessionStorage() {
 export function UserContextProvider({ children }: IProviderProps) {
   const [user, setuser] = useState(getUserFromSessionStorage());
 
-  const changeUser = (newJWTInfo: LoginRes) => {
+  const login = (newJWTInfo: LoginRes) => {
     localStorage.setItem("auth_token", JSON.stringify(newJWTInfo || {}));
     setuser(newJWTInfo.user);
+  };
+
+  const updateUser = (newUser: UserInfo) => {
+    setuser(newUser);
   };
 
   const logout = () => {
@@ -37,7 +42,7 @@ export function UserContextProvider({ children }: IProviderProps) {
   };
 
   return (
-    <UserContext.Provider value={{ user, changeUser, logout }}>
+    <UserContext.Provider value={{ user, updateUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );

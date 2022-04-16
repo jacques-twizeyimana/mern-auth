@@ -14,8 +14,7 @@ export default function Login() {
     password: "",
   });
 
-  const { changeUser } = useContext(UserContext);
-  console.log(changeUser);
+  const { login } = useContext(UserContext);
 
   function handleChange(e: ValueType) {
     setvalues((val) => ({ ...val, [e.name]: e.value }));
@@ -30,7 +29,7 @@ export default function Login() {
       const resp = await authenticatorService.login(values);
       if (resp.data.success) {
         // update user in store
-        changeUser(resp.data.data);
+        login(resp.data.data);
         toast.success("Successfully logged in");
         navigate("/auth/profile");
         localStorage.setItem("auth_token", JSON.stringify(resp.data.data));
