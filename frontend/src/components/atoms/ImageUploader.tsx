@@ -10,13 +10,12 @@ export default function ImageUploader<T>({
   handleUpload,
   ...rest
 }: IProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [url, setUrl] = useState(placeholder);
+  const [imageURL, setImageURL] = useState(placeholder);
 
   const handleImg = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setUrl(URL.createObjectURL(e.target.files[0]));
-      setFile(e.target.files[0]);
+      setImageURL(URL.createObjectURL(e.target.files[0]));
+      handleUpload(e.target.files[0]);
     }
   };
 
@@ -31,7 +30,7 @@ export default function ImageUploader<T>({
       />
       <label htmlFor="photo" className="block min-h-20 cursor-pointer">
         <img
-          src={url}
+          src={imageURL}
           {...rest}
           className="block max-w-full mx-auto object-cover w-32 h-32 border cursor-pointer rounded-full"
         />
