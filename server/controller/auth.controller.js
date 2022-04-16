@@ -53,15 +53,21 @@ router.get("/current", isAuthenticated, (req, res) => {
 
 router.put(
   "/change-profile",
-  // isAuthenticated,
+  isAuthenticated,
   upload.single("image"),
   (req, res) => {
-    console.log(req.file);
-    console.log("====================================");
-    console.log(req.files);
-    console.log("====================================");
-
-    return res.send(createSuccess({}));
+    if (!req.file) return res.send(createError(400, "No file uploaded"));
+    User.findByIdAndUpdate(
+      req.user._id,
+      { profileImage: "/uploads/profiles/" + req.file.filename },
+      { new: true }
+    )
+      .then((updated) => res.send(createSuccess(updated)))
+      .catch((err) =>
+        res
+          .status(500)
+          .send(createError(500, err.message || "Internal server error"))
+      );
   }
 );
 
@@ -69,6 +75,7 @@ router.post("/initiate-reset", async (req, res) => {
   if (!req.body.email || req.body.email.length < 1)
     return res.send(createError(400, "Email is required"));
   return res.send(createSuccess({ email }));
+  ``;
 });
 
 function generateAuthToken(user) {
