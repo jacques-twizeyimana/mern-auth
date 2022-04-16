@@ -36,14 +36,11 @@ export default function Home() {
       .catch((err) => toast.error(err.message || "Failed to save"));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // @ts-ignore
-    setDraftText({ ...draftText, content: e.target.value });
-  };
-
   return (
     <div className="lg:w-2/3 mx-auto py-14 lg:py-20 xl:py-24 px-6">
-      <div className={isEditing || isLoading ? "hidden" : "text-right"}>
+      <div
+        className={isEditing || isLoading || !user ? "hidden" : "text-right"}
+      >
         <button
           className="px-2 py-2 bg-gray-50 rounded-full"
           onClick={() => setisEditing(true)}
