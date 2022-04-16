@@ -1,19 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import toast from "react-hot-toast";
 import { textService } from "../services/text.service";
+import UserContext from "../store/usercontext";
 import { ITextInfo } from "../types/services/text.types";
 
 export default function Home() {
+  const [isLoading, setisLoading] = useState(true);
   const [draftText, setDraftText] = useState<string>("");
   const [publicText, setPublicText] = useState<ITextInfo | undefined>();
   const [isEditing, setisEditing] = useState(false);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setDraftText(publicText?.content || "");
   }, [publicText]);
 
   useEffect(() => {
-    textService.getText().then((resp) => setPublicText(resp.data.data));
+    textService
+      .getText()
+      .then((resp) => setPublicText(resp.data.data))
+      .finally(() => setisLoading(false));
   }, []);
 
   const handleSave = () => {
@@ -36,7 +43,7 @@ export default function Home() {
 
   return (
     <div className="lg:w-2/3 mx-auto py-14 lg:py-20 xl:py-24 px-6">
-      <div className={isEditing ? "hidden" : "text-right"}>
+      <div className={isEditing || isLoading ? "hidden" : "text-right"}>
         <button
           className="px-2 py-2 bg-gray-50 rounded-full"
           onClick={() => setisEditing(true)}
@@ -60,7 +67,11 @@ export default function Home() {
           isEditing ? "hidden" : "block"
         } text-2xl lg:text-3xl italic text-gray-500 tracking-wide`}
       >
-        {publicText?.content}
+        {isLoading ? (
+          <img src="/gif/rolling-white.svg" className="w-40 my-8 mx-auto" />
+        ) : (
+          publicText?.content
+        )}
       </p>
       <div className={`${isEditing ? "block" : "hidden"}`}>
         <textarea
