@@ -32,6 +32,11 @@ var userSchema = new mongoose.Schema(
       required: true,
       default: "ADMIN",
     },
+    profileImage: {
+      type: String,
+      required: false,
+      default: "/uploads/profiles/default.png",
+    },
   },
   { timestamps: true }
 );
