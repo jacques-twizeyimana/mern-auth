@@ -18,6 +18,7 @@ export default function Navbar() {
     ];
   } else {
     links = [
+      { text: "Home", to: "/" },
       { text: "Login", to: "/auth/login" },
       { text: "Sign up", to: "/auth/register" },
     ];
