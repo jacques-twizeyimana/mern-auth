@@ -12,6 +12,7 @@ import Profile from "./pages/auth/Profile";
 import { UserContextProvider } from "./store/usercontext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/auth/Logout";
+import EditProfile from "./pages/auth/EditProfile";
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="reset" element={<ResetPassword />} />
+              <Route
+                path="profile/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditProfile />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="profile"
                 element={
