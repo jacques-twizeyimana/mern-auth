@@ -27,10 +27,10 @@ var userSchema = new mongoose.Schema(
       maxlength: 1024,
       minlength: 3,
     },
-    isAdmin: {
-      type: Boolean,
+    role: {
+      type: String,
       required: true,
-      default: false,
+      default: "ADMIN",
     },
   },
   { timestamps: true }

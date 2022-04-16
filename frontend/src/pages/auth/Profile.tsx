@@ -8,7 +8,7 @@ export default function Profile() {
     <div className="shadow-md w-10/12 md:w-2/3 lg:w-1/2  rounded-lg my-10 mx-auto">
       <div className="bg-gray-900 rounded-t-lg py-2">
         <img
-          src="https://i.pravatar.cc/300"
+          src="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
           alt="Profile picture"
           className="w-20 h-20 rounded-full block mx-auto object-cover"
         />
@@ -25,6 +25,10 @@ export default function Profile() {
           {user?.email}
         </p>
         <p className="text-base font-normal py-1">
+          <span className="font-bold">User type: </span>
+          {user?.role}
+        </p>
+        <p className="text-sm font-normal py-3 text-gray-600">
           {`Joined on ${new Date(
             user?.createdAt || new Date().toLocaleDateString()
           ).toDateString()}`}

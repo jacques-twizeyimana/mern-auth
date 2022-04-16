@@ -11,5 +11,5 @@ export interface CreateUserInfo extends BasicUserInfo {
 }
 
 export interface UserInfo extends Table, BasicUserInfo {
-  isAdmin: boolean;
+  role: string;
 }
