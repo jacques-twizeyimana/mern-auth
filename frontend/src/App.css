@@ -4,3 +4,7 @@
 *{
     font-family: 'Inter', sans-serif;
 }
+
+.min-h-20{
+    min-height: 80px;
+}
