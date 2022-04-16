@@ -2,9 +2,10 @@ import axios, { AxiosRequestConfig } from "axios";
 import { LoginRes } from "../types/services/auth.types";
 
 const commonConfig: AxiosRequestConfig = {};
-const BASE_URL = "https://mern-auth-test-backend.herokuapp.com/api/v1/";
+export const BASE_URL = "http://localhost:5000";
+// export const BASE_URL = "https://mern-auth-test-backend.herokuapp.com"
 
-const interceptAdminReq = (config: AxiosRequestConfig) => {
+const interceptRequest = (config: AxiosRequestConfig) => {
   const token = localStorage.getItem("auth_token");
 
   // when request is open no need to add bearer token
@@ -19,7 +20,10 @@ const interceptAdminReq = (config: AxiosRequestConfig) => {
 
 const axiosConfig: AxiosRequestConfig = {
   ...commonConfig,
-  baseURL: BASE_URL,
+  baseURL: BASE_URL + "/api/v1/",
 };
 
-export const customAxios = axios.create(axiosConfig);
+const customAxios = axios.create(axiosConfig);
+customAxios.interceptors.request.use(interceptRequest);
+
+export { customAxios };
