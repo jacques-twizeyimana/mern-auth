@@ -89,23 +89,21 @@ router.post("/", async (req, res) => {
     );
 });
 
-router.put("/", async (req, res) => {
+router.put("/", isAuthenticated, async (req, res) => {
   const schema = Joi.object({
-    _id: Joi.string().min(10).max(30).required(),
-    firstName: Joi.string().max(255).min(3).required(),
-    lastName: Joi.string().max(255).min(3).required(),
-    email: Joi.string().max(255).min(3).required().email(),
-    password: Joi.string().max(255).min(6).required(),
-    isAdmin: Joi.boolean(),
+    firstName: Joi.string().max(255).min(3),
+    lastName: Joi.string().max(255).min(3),
+    email: Joi.string().max(255).min(3).email(),
+    role: Joi.string(),
   });
 
   const { error } = schema.validate(req.body);
   if (error) return res.send(createError(400, error.details[0].message));
 
-  let hashedPswd = await hashPassword(req.body.password);
-  req.body.password = hashedPswd;
+  // let hashedPswd = await hashPassword(req.body.password);
+  // req.body.password = hashedPswd;
 
-  User.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+  User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: false })
     .then((user) =>
       res.send(
         createSuccess(
