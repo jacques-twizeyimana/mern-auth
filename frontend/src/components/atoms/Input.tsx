@@ -15,11 +15,13 @@ export default function Input<T>({ type, label, handleChange, name, ...attr }: I
         {label}
       </label>
       <input
-          value={_value}
+        value={_value}
         onChange={handleOnChange}
         required
         type={type || "text"}
-        className="border border-gray-600 rounded text-base h-12 block w-full focus:outline-none px-3"
+        className={` ${
+          attr.disabled ? "bg-gray-200" : ""
+        } border border-gray-600 rounded text-base h-12 block w-full focus:outline-none px-3`}
         {...attr}
       />
     </div>
