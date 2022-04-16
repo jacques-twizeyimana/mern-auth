@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { AllHTMLAttributes, DOMAttributes, FormEvent } from "react";
 
 export interface ValueType<T = Event> {
   name: string;
@@ -6,7 +6,6 @@ export interface ValueType<T = Event> {
   label?: string;
   event?: FormEvent<T>;
 }
-
 
 export interface LoginDto {
   email: string;
@@ -18,6 +17,7 @@ export interface SignupDto extends LoginDto {
   lastName: string;
 }
 
+export type EditProfileDto = Partial<SignupDto>;
 export interface ResetDto {
   code: string;
   password: string;
@@ -37,3 +37,5 @@ export interface Table {
   updatedAt: string | Date;
   __v: number;
 }
+
+export interface HtmlDOMProps<T> extends AllHTMLAttributes<DOMAttributes<T>> {}

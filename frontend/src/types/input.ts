@@ -1,6 +1,6 @@
-import { ValueType } from ".";
+import { HtmlDOMProps, ValueType } from ".";
 
-export interface InputProps<T> {
+export interface InputProps<T> extends HtmlDOMProps<T> {
   handleChange: (_e: ValueType) => void;
   name: string;
   value?: string | number;
