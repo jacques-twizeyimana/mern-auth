@@ -3,6 +3,7 @@ import { LoginDto, Response } from "../types";
 import {
   ChangePassword,
   InitiateResetPassword,
+  IResetPasswordRes,
   LoginRes,
   ResetPassword,
 } from "../types/services/auth.types";
@@ -35,7 +36,7 @@ class AuthenticatorService {
 
   public async forgotPassword(
     initiateResetPassword: InitiateResetPassword
-  ): Promise<AxiosResponse<Response<UserInfo>>> {
+  ): Promise<AxiosResponse<Response<IResetPasswordRes>>> {
     return await customAxios.post(
       "/auth/initiate-reset",
       initiateResetPassword

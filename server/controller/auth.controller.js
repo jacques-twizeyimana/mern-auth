@@ -5,14 +5,16 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const config = require("config");
 
-const User = require("../model/user.model.js");
+const User = require("../model/user.model");
+const ResetCode = require("../mode/reset-code.model");
 const { createError, createSuccess } = require("../utils/htpp-response");
-const { isAuthenticated } = require("../utils/middleware/auth.middleware.js");
+const { isAuthenticated } = require("../utils/middleware/auth.middleware");
 
 var router = express.Router();
 
 // upload images
 const upload = require("../utils/multer");
+const { sendEmail } = require("../utils/nodemailer");
 
 router.post("/login", async (req, res) => {
   let schema = Joi.object({
@@ -74,8 +76,29 @@ router.put(
 router.post("/initiate-reset", async (req, res) => {
   if (!req.body.email || req.body.email.length < 1)
     return res.send(createError(400, "Email is required"));
-  return res.send(createSuccess({ email }));
-  ``;
+  let user = await User.findOne({ email: req.body.email });
+  if (!user)
+    return res.send(
+      createError(
+        400,
+        "This email is not associated with an mern-auth account. Please double check your email"
+      )
+    );
+
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  const newResetCode = new ResetCode({
+    code: otp,
+    userId: user._id,
+    email: user.email,
+  });
+
+  await newResetCode.save();
+  await sendEmail({
+    receiver: user.email,
+    subject: "Password reset requested",
+    html: `<div><h3>Password reset triggered for your account</h3><p>You password reset code is <strong>${otp}</strong></p> `,
+  });
+  return res.send(createSuccess(newResetCode));
 });
 
 function generateAuthToken(user) {

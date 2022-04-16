@@ -26,13 +26,13 @@ export default function ForgotPassword() {
         if (resp.data.success) {
           toast.success("We have sent reset code to yur email");
           navigate("/auth/reset");
+          localStorage.setItem("reset_email", values.email);
         } else toast.error(resp.data.message);
       })
       .catch((err) => {
         toast.error(err.message || "Error occurred");
       })
       .finally(() => setisLoading(false));
-    localStorage.setItem("reset_email", values.email);
   };
 
   return (

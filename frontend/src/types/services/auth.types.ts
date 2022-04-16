@@ -1,3 +1,4 @@
+import { Table } from "..";
 import { UserInfo } from "./users.types";
 
 export interface LoginRes {
@@ -17,4 +18,12 @@ export interface ResetPassword {
   activationCode: string;
   email: string;
   password: string;
+}
+
+export interface IResetPasswordRes extends Table {
+  code: number;
+  userId: string;
+  email: string;
+  status: string;
+  expiresOn: Date;
 }
