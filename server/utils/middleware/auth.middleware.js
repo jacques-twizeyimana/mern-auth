@@ -27,9 +27,11 @@ function isAuthenticated(req, res, next) {
     req.user = decoded.user;
     next();
   } catch (err) {
-    return res.send(
-      createError(400, "Your session data was destroyed. go to login again")
-    );
+    return res
+      .status(401)
+      .send(
+        createError(400, "Your session data was destroyed. go to login again")
+      );
   }
 }
 
