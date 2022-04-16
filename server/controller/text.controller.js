@@ -3,6 +3,7 @@ const express = require("express");
 
 const Text = require("../model/text.model");
 const { createError, createSuccess } = require("../utils/htpp-response");
+const { isAuthenticated } = require("../utils/middleware/auth.middleware");
 
 var router = express.Router();
 
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
   return res.send(createSuccess(text));
 });
 
-router.put("/", async (req, res) => {
+router.put("/", isAuthenticated, async (req, res) => {
   const { error } = validateText(req.body);
   if (error) return res.send(createError(400, error.details[0].message));
 
