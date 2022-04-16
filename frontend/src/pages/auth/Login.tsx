@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { LoginDto, ValueType } from "../../types";
 import Input from "../../components/atoms/Input";
 import { Link } from "react-router-dom";
-import { authenticatorService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../store/usercontext";
@@ -26,7 +26,7 @@ export default function Login() {
     e.preventDefault();
     setisLoading(true);
     try {
-      const resp = await authenticatorService.login(values);
+      const resp = await authService.login(values);
       if (resp.data.success) {
         // update user in store
         login(resp.data.data);

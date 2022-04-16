@@ -1,11 +1,10 @@
 import { AxiosResponse } from "axios";
-import { LoginDto, Response } from "../types";
+import { LoginDto, ResetPasswordDto, Response } from "../types";
 import {
   ChangePassword,
   InitiateResetPassword,
   IResetPasswordRes,
   LoginRes,
-  ResetPassword,
 } from "../types/services/auth.types";
 import { UserInfo } from "../types/services/users.types";
 import { customAxios } from "./axios";
@@ -42,9 +41,9 @@ class AuthenticatorService {
       initiateResetPassword
     );
   }
-  public async passwordReset(resetPassword: ResetPassword) {
+  public async passwordReset(resetPassword: ResetPasswordDto) {
     return await customAxios.post("/auth/reset-password", resetPassword);
   }
 }
 
-export const authenticatorService = new AuthenticatorService();
+export const authService = new AuthenticatorService();

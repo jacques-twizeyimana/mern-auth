@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/atoms/Input";
-import { authenticatorService } from "../../services/auth.service";
+import { authService } from "../../services/auth.service";
 import { ValueType } from "../../types";
 
 export default function ForgotPassword() {
@@ -20,7 +20,7 @@ export default function ForgotPassword() {
   const handleForgot = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setisLoading(true);
-    authenticatorService
+    authService
       .forgotPassword({ email: values.email })
       .then((resp) => {
         if (resp.data.success) {

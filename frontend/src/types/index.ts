@@ -18,8 +18,9 @@ export interface SignupDto extends LoginDto {
 }
 
 export type EditProfileDto = Partial<SignupDto>;
-export interface ResetDto {
+export interface ResetPasswordDto {
   code: string;
+  email: string;
   password: string;
   confirmPassword: string;
 }

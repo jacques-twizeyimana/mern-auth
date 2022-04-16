@@ -14,11 +14,6 @@ export interface ChangePassword {
 export interface InitiateResetPassword {
   email: string;
 }
-export interface ResetPassword {
-  activationCode: string;
-  email: string;
-  password: string;
-}
 
 export interface IResetPasswordRes extends Table {
   code: number;

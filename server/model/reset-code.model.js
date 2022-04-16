@@ -30,6 +30,6 @@ var ResetCodeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Text = mongoose.model("reset-token", ResetCodeSchema);
+const ResetCode = mongoose.model("reset-code", ResetCodeSchema);
 
-module.exports = Text;
+module.exports = ResetCode;
