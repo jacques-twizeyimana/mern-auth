@@ -47,6 +47,12 @@ router.get("/current", isAuthenticated, (req, res) => {
   return res.send(createSuccess(req.user));
 });
 
+router.post("/initiate-reset", async (req, res) => {
+  if (!req.body.email || req.body.email.length < 1)
+    return res.send(createError(400, "Email is required"));
+  return res.send(createSuccess({ email }));
+});
+
 function generateAuthToken(user) {
   return jwt.sign({ user }, config.get("jwtPrivateKey"));
 }
