@@ -35,7 +35,7 @@ var userSchema = new mongoose.Schema(
     profileImage: {
       type: String,
       required: false,
-      default: "/uploads/profiles/default.png",
+      default: "/uploads/profiles/default.jpg",
     },
   },
   { timestamps: true }

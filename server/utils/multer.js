@@ -3,7 +3,7 @@ const { makeId } = require("./random");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/uploads/profiles");
+    cb(null, "../public/uploads/profiles");
   },
   filename: function (req, file, cb) {
     let fileExtension = file.originalname.substring(
