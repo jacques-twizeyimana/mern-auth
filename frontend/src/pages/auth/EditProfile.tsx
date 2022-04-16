@@ -35,7 +35,7 @@ export default function EditProfile() {
       if (resp.data.success) {
         toast.success("Successfully updated data");
         navigate("/auth/profile");
-        updateUser(resp.data.data);
+        updateUser({ ...user, ...resp.data.data });
       } else toast.error(resp.data.message);
     } catch (err) {
       // @ts-ignore
