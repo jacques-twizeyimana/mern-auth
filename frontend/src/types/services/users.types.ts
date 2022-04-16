@@ -12,4 +12,5 @@ export interface CreateUserInfo extends BasicUserInfo {
 
 export interface UserInfo extends Table, BasicUserInfo {
   role: string;
+  profileImage: string;
 }

@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const bodyparser = require("body-parser");
 const config = require("config");
 const cors = require("cors");
@@ -8,6 +9,11 @@ app.use(bodyparser.json());
 app.use(cors());
 
 require("./model/db");
+
+// allow static assests to be available
+
+app.use(express.static(__dirname + "/public"));
+app.use("/uploads", express.static("uploads"));
 
 // controllers
 

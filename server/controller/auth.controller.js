@@ -11,6 +11,9 @@ const { isAuthenticated } = require("../utils/middleware/auth.middleware.js");
 
 var router = express.Router();
 
+// upload images
+const upload = require("../utils/multer");
+
 router.post("/login", async (req, res) => {
   let schema = Joi.object({
     email: Joi.string().min(5).max(70).required().email(),
@@ -36,8 +39,9 @@ router.post("/login", async (req, res) => {
         "lastName",
         "email",
         "_id",
-        "isAdmin",
+        "role",
         "createdAt",
+        "profileImage",
       ]),
     })
   );
@@ -46,6 +50,20 @@ router.post("/login", async (req, res) => {
 router.get("/current", isAuthenticated, (req, res) => {
   return res.send(createSuccess(req.user));
 });
+
+router.put(
+  "/change-profile",
+  // isAuthenticated,
+  upload.single("image"),
+  (req, res) => {
+    console.log(req.file);
+    console.log("====================================");
+    console.log(req.files);
+    console.log("====================================");
+
+    return res.send(createSuccess({}));
+  }
+);
 
 router.post("/initiate-reset", async (req, res) => {
   if (!req.body.email || req.body.email.length < 1)
