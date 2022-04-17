@@ -12,3 +12,7 @@
 .h-90vh{
     height: 91vh;
 }
+
+.max-w-3\/4 {
+    max-width: 75%;
+}
