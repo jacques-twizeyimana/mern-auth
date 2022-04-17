@@ -26,6 +26,17 @@ router.get("/", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/role/admins", isAuthenticated, async (req, res) => {
+  try {
+    const users = await User.find({ role: "ADMIN" }).select(
+      "_id firstName lastName email role createdAt profileImage"
+    );
+    return res.send(createSuccess(users));
+  } catch (error) {
+    return res.status(500).send(createError(500, "No users found"));
+  }
+});
+
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
     .then((user) =>

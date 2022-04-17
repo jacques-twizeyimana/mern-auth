@@ -19,6 +19,10 @@ class UsersService {
   public async getAllUsers(): Promise<AxiosResponse<Response<UserInfo[]>>> {
     return await customAxios.get("/users");
   }
+
+  public async getAllAdmins(): Promise<AxiosResponse<Response<UserInfo[]>>> {
+    return await customAxios.get("/users/role/admins");
+  }
 }
 
 export const userService = new UsersService();
