@@ -1,7 +1,14 @@
 import { ChangeEvent, useState } from "react";
 import { InputProps } from "../../types/input";
 
-export default function Input<T>({ type, label, handleChange, name, ...attr }: InputProps<T>) {
+export default function Input<T>({
+  type,
+  label,
+  handleChange,
+  name,
+  className,
+  ...attr
+}: InputProps<T>) {
   const [_value, setValue] = useState<string>("");
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -21,7 +28,7 @@ export default function Input<T>({ type, label, handleChange, name, ...attr }: I
         type={type || "text"}
         className={` ${
           attr.disabled ? "bg-gray-200" : ""
-        } border border-gray-600 rounded text-base h-12 block w-full focus:outline-none px-3`}
+        } border border-gray-600 rounded text-base h-12 block w-full focus:outline-none px-3 ${className}`}
         {...attr}
       />
     </div>
