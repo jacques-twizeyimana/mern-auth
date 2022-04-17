@@ -1,101 +1,50 @@
 import { useState, useEffect, FormEvent, useContext } from "react";
+import toast from "react-hot-toast";
+import { chatService } from "../../services/message.service";
 import UserContext from "../../store/usercontext";
 import { IChatMessages } from "../../types/services/message.types";
-import { UserInfo } from "../../types/services/users.types";
 import Input from "../atoms/Input";
 
 interface IProps {
   receiver?: string;
 }
 
-function getSender(_id: string): UserInfo {
-  return {
-    _id,
-    firstName: "Jacques",
-    lastName: "Me",
-    role: "ADMIN",
-    profileImage: "",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    __v: 1,
-    email: "sandbergjacques500@gmail.com",
-  };
-}
-
-const staticMessages: IChatMessages[] = [
-  {
-    _id: "1",
-    createdAt: new Date(),
-    message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-    dicta veritatis qui similique. Mollitia fugiat nisi
-    molestias amet in suscipit quod esse, obcaecati id deserunt
-    repellat, alias, quaerat nostrum fuga!`,
-    sender: getSender("2"),
-    status: "SENT",
-    updatedAt: new Date(),
-    __v: 1,
-  },
-  {
-    _id: "1",
-    createdAt: new Date(),
-    message: "Good afternoon",
-    sender: getSender("2"),
-    status: "SENT",
-    updatedAt: new Date(),
-    __v: 1,
-  },
-
-  {
-    _id: "1",
-    createdAt: new Date(),
-    message: "Hello",
-    sender: getSender("625c8973e0cb2ffb728ba7f4"),
-    status: "SENT",
-    updatedAt: new Date(),
-    __v: 1,
-  },
-
-  {
-    _id: "1",
-    createdAt: new Date(),
-    message: "Hey",
-    sender: getSender("2"),
-    status: "SENT",
-    updatedAt: new Date(),
-    __v: 1,
-  },
-
-  {
-    _id: "1",
-    createdAt: new Date(),
-    message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-    dicta veritatis qui similique. Mollitia fugiat nisi
-    molestias amet in suscipit quod esse, obcaecati id deserunt
-    repellat, alias, quaerat nostrum fuga!`,
-    sender: getSender("625c8973e0cb2ffb728ba7f4"),
-    status: "SENT",
-    updatedAt: new Date(),
-    __v: 1,
-  },
-];
-
 export default function ChatMessages({ receiver }: IProps) {
   const [isLoading, setisLoading] = useState(false);
   const [messages, setmessages] = useState<IChatMessages[]>([]);
+  const [draftMessage, setdraftMessage] = useState("");
 
   const { user } = useContext(UserContext);
   useEffect(() => {
     if (receiver) {
       setisLoading(true);
-      setTimeout(() => {
-        setisLoading(false);
-        setmessages(staticMessages);
-      }, 2000);
+      chatService
+        .getChatMessages(receiver)
+        .then((resp) => setmessages(resp.data.data))
+        .catch((err) => toast.error(err.message || "Failed to load messages"))
+        .finally(() => setisLoading(false));
     }
   }, [receiver]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      const resp = await chatService.sendMessage({
+        receiverId: receiver || "",
+        message: draftMessage,
+      });
+      if (resp.data.success) {
+        toast.success("Message sent successfully.");
+        setmessages([...messages, resp.data.data]);
+        setdraftMessage("");
+      } else toast.error(resp.data.message);
+    } catch (error) {
+      // @ts-ignore
+      toast.error(error.message || "Failed to send message");
+    }
+
+    setmessages([...messages]);
   };
 
   return (
@@ -114,6 +63,10 @@ export default function ChatMessages({ receiver }: IProps) {
               </div>
             ) : (
               <div className="messages py-2">
+                <p className="text-sm py-2 text-center text-gray-500">
+                  This is the very beginning of your direct messages history.
+                  <br /> Messages you sent will appear below.
+                </p>
                 {messages.map((msg) => (
                   <div
                     key={msg._id}
@@ -130,7 +83,7 @@ export default function ChatMessages({ receiver }: IProps) {
                     >
                       {msg.message}
                       <div className="span text-right pt-1 text-xs">
-                        12:00 PM
+                        {new Date(msg.createdAt).toTimeString()}
                       </div>
                     </p>
                   </div>
@@ -142,7 +95,7 @@ export default function ChatMessages({ receiver }: IProps) {
           <form onSubmit={handleSubmit} className="flex w-full items-center">
             <div className="w-full">
               <Input
-                handleChange={(e) => {}}
+                handleChange={(e) => setdraftMessage(e.value.toString())}
                 name={"message"}
                 className="rounded-r-none placeholder:text-gray-400"
                 placeholder="Type message. Press enter to sent"
