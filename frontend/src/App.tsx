@@ -13,6 +13,7 @@ import { UserContextProvider } from "./store/usercontext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/auth/Logout";
 import EditProfile from "./pages/auth/EditProfile";
+import Messages from "./pages/Messages";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route index element={<Home />} />
+            <Route path="messages" element={<Messages />} />
             <Route path="auth">
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />

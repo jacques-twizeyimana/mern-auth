@@ -8,3 +8,7 @@
 .min-h-20{
     min-height: 80px;
 }
+
+.h-90vh{
+    height: 91vh;
+}

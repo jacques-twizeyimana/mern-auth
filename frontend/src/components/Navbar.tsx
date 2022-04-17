@@ -14,7 +14,7 @@ export default function Navbar() {
     links = [
       { text: "Home", to: "/" },
       { text: "Profile", to: "/auth/profile" },
-      { text: "Logout", to: "/auth/logout" },
+      { text: "Messages", to: "/messages" },
     ];
   } else {
     links = [

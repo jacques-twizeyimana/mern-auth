@@ -15,17 +15,45 @@ const {
 
 var router = express.Router();
 
-router.get("/", isAuthenticated, isAdmin, async (req, res) => {
-  const users = await User.find().select(
-    "_id firstName lastName email isAdmin createdAt"
-  );
-  if (users) return res.status(201).send(users);
+router.get("/", isAuthenticated, async (req, res) => {
+  try {
+    const users = await User.find().select(
+      "_id firstName lastName email role createdAt profileImage"
+    );
+    return res.send(createSuccess(users));
+  } catch (error) {
+    return res.status(500).send(createError(500, "No users found"));
+  }
 });
 
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
     .then((user) =>
       res.send(
+        createSuccess(
+          _.pick(user, [
+            "isAdmin",
+            "_id",
+            "lastName",
+            "firstName",
+            "email",
+            "createdAt",
+          ])
+        )
+      )
+    )
+    .catch((err) => {
+      res
+        .status(500)
+        .send(createError(500, err.message || "Internal server error"));
+    });
+});
+
+router.get("/email/:email", async (req, res) => {
+  const user = await User.findOne({ email: req.params.email });
+  if (user)
+    return res.send(
+      createSuccess(
         _.pick(user, [
           "isAdmin",
           "_id",
@@ -35,28 +63,10 @@ router.get("/:id", (req, res) => {
           "createdAt",
         ])
       )
-    )
-    .catch((err) => {
-      res.send(createError(500, err.message || "Internal server error"));
-    });
-});
-
-router.get("/email/:email", async (req, res) => {
-  const user = await User.findOne({ email: req.params.email });
-  if (user)
-    return res.send(
-      _.pick(user, [
-        "isAdmin",
-        "_id",
-        "lastName",
-        "firstName",
-        "email",
-        "createdAt",
-      ])
     );
-  return res.send(
-    createError(404, "User with this email address was not found")
-  );
+  return res
+    .status(404)
+    .send(createError(404, "User with this email address was not found"));
 });
 
 router.post("/", async (req, res) => {
