@@ -20,11 +20,13 @@ app.use("/uploads", express.static("uploads"));
 const userController = require("./controller/user.controller");
 const authController = require("./controller/auth.controller");
 const textController = require("./controller/text.controller");
+const messageController = require("./controller/message.controller");
 
 app.get("/", (req, res) => res.send(config.get("APP_DETAILS")));
 app.use("/api/v1/users", userController);
 app.use("/api/v1/auth", authController);
 app.use("/api/v1/text", textController);
+app.use("/api/v1/messages", messageController);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`App listening on port ${port}!`));
