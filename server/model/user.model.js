@@ -41,6 +41,25 @@ var userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
+
+userSchema.virtual("messagesSent", {
+  ref: "Message",
+  localField: "_id",
+  foreignField: "senderId",
+});
+
+userSchema.virtual("messagesReceived", {
+  ref: "Message",
+  localField: "_id",
+  foreignField: "receiverId",
+});
+
+// Set Object and Json property to true. Default is set to false
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
+
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

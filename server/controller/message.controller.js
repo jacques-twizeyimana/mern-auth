@@ -15,6 +15,8 @@ router.get("/:receiverId", isAuthenticated, async (req, res) => {
       { senderId: receiverId, receiverId: req.user._id },
     ],
   })
+    .populate("receiverId")
+    .populate("senderId")
     .then((messages) => res.send(createSuccess(messages)))
     .catch((err) => res.status(500).send(createError(500, err.message)));
 });
@@ -27,7 +29,11 @@ router.post("/", isAuthenticated, async (req, res) => {
     const message = new Message({ ...req.body, senderId: req.user._id });
     await message.save();
 
-    return res.send(createSuccess(message));
+    const populatedMessage = await Message.findById(message._id)
+      .populate("receiverId")
+      .populate("senderId");
+
+    return res.send(createSuccess(populatedMessage));
   } catch (error) {
     res.send(createError(500, error.message || "Failed to send message"));
   }
