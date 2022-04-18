@@ -6,6 +6,10 @@ import { IChatMessages } from "../../types/services/message.types";
 import { formatAMPM } from "../../utils/date";
 import Input from "../atoms/Input";
 
+
+import socketClient from "socket.io-client";
+import { BASE_URL } from "../../services/axios";
+
 interface IProps {
   receiver?: string;
 }
@@ -14,6 +18,8 @@ export default function ChatMessages({ receiver }: IProps) {
   const [isLoading, setisLoading] = useState(false);
   const [messages, setmessages] = useState<IChatMessages[]>([]);
   const [draftMessage, setdraftMessage] = useState("");
+
+  const socket = socketClient(BASE_URL);
 
   const { user } = useContext(UserContext);
   useEffect(() => {
@@ -24,6 +30,17 @@ export default function ChatMessages({ receiver }: IProps) {
         .then((resp) => setmessages(resp.data.data))
         .catch((err) => toast.error(err.message || "Failed to load messages"))
         .finally(() => setisLoading(false));
+
+      socket.on("newMessage", (message: IChatMessages) => {
+        if (
+          message.receiverId._id === user?._id &&
+          message.senderId._id === receiver
+        ) {
+          let messagesClone = messages;
+          messagesClone.push(message);
+          setmessages(messagesClone);
+        }
+      });
     }
   }, [receiver]);
 
@@ -37,7 +54,9 @@ export default function ChatMessages({ receiver }: IProps) {
       });
       if (resp.data.success) {
         toast.success("Message sent successfully.");
-        setmessages([...messages, resp.data.data]);
+        let messagesClone = messages;
+        messagesClone.push(resp.data.data);
+        setmessages(messagesClone);
         setdraftMessage("");
       } else toast.error(resp.data.message);
     } catch (error) {
@@ -98,6 +117,7 @@ export default function ChatMessages({ receiver }: IProps) {
           <form onSubmit={handleSubmit} className="flex w-full items-center">
             <div className="w-full">
               <Input
+                value={draftMessage}
                 handleChange={(e) => setdraftMessage(e.value.toString())}
                 name={"message"}
                 className="rounded-r-none placeholder:text-gray-400"

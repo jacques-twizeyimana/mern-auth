@@ -1,5 +1,19 @@
 const express = require("express");
 const app = express();
+
+// socket io config
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+export const io = new Server(server);
+
+io.on("connection", (socket) => {
+    console.log("a user connected");
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  });
+
 const bodyparser = require("body-parser");
 const config = require("config");
 const cors = require("cors");

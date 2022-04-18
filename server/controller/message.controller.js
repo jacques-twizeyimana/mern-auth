@@ -4,6 +4,7 @@ const express = require("express");
 const Message = require("../model/message.model");
 const { createError, createSuccess } = require("../utils/htpp-response");
 const { isAuthenticated } = require("../utils/middleware/auth.middleware");
+const { io } = require("..");
 
 var router = express.Router();
 
@@ -32,6 +33,8 @@ router.post("/", isAuthenticated, async (req, res) => {
     const populatedMessage = await Message.findById(message._id)
       .populate("receiverId")
       .populate("senderId");
+    // emit new message event
+    io.emit("newMessage", populatedMessage);
 
     return res.send(createSuccess(populatedMessage));
   } catch (error) {
@@ -41,7 +44,7 @@ router.post("/", isAuthenticated, async (req, res) => {
 
 function validateMessage(body) {
   const schema = Joi.object({
-    message: Joi.string().max(1000).min(10).required(),
+    message: Joi.string().max(1000).min(1).required(),
     receiverId: Joi.string().max(255).min(3),
   });
   return schema.validate(body);
