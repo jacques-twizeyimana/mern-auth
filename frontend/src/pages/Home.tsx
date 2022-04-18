@@ -65,7 +65,7 @@ export default function Home() {
         } text-2xl lg:text-3xl italic text-gray-500 tracking-wide`}
       >
         {isLoading ? (
-          <img src="/gif/rolling-white.svg" className="w-40 my-8 mx-auto" />
+          <img src="/gif/rolling-white.svg" className="w-32 my-8 mx-auto" />
         ) : (
           publicText?.content
         )}
