@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { chatService } from "../../services/message.service";
 import UserContext from "../../store/usercontext";
 import { IChatMessages } from "../../types/services/message.types";
+import { formatAMPM } from "../../utils/date";
 import Input from "../atoms/Input";
 
 interface IProps {
@@ -71,19 +72,21 @@ export default function ChatMessages({ receiver }: IProps) {
                   <div
                     key={msg._id}
                     className={`my-2 ${
-                      msg.sender._id === user?._id ? "text-right" : "text-left"
+                      msg.senderId._id === user?._id
+                        ? "text-right"
+                        : "text-left"
                     }`}
                   >
                     <p
                       className={`py-1 px-3 text-left ${
-                        msg.sender._id === user?._id
+                        msg.senderId._id === user?._id
                           ? "bg-cyan-900 text-white"
                           : "bg-gray-300"
                       }  text-base inline-block max-w-3/4 rounded-lg`}
                     >
                       {msg.message}
-                      <div className="span text-right pt-1 text-xs">
-                        {new Date(msg.createdAt).toTimeString()}
+                      <div className="span text-right pt-1 text-xs uppercase">
+                        {formatAMPM(new Date(msg.createdAt))}
                       </div>
                     </p>
                   </div>

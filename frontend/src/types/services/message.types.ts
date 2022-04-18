@@ -2,8 +2,8 @@ import { Table } from "..";
 import { UserInfo } from "./users.types";
 
 export interface IChatMessages extends Table {
-  sender: UserInfo;
-  receiver: UserInfo;
+  senderId: UserInfo;
+  receiverId: UserInfo;
   message: string;
   status: string;
 }
