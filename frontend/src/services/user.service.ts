@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { UserInfo } from "../types/services/users.types";
+import { IChangeUserRole, UserInfo } from "../types/services/users.types";
 import { customAxios } from "./axios";
 import { EditProfileDto, Response, SignupDto } from "../types";
 
@@ -22,6 +22,12 @@ class UsersService {
 
   public async getAllAdmins(): Promise<AxiosResponse<Response<UserInfo[]>>> {
     return await customAxios.get("/users/role/admins");
+  }
+
+  public async changeUserRole(
+    data: IChangeUserRole
+  ): Promise<AxiosResponse<Response<unknown>>> {
+    return await customAxios.put("/users/change-role", data);
   }
 }
 

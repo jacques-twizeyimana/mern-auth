@@ -142,6 +142,28 @@ router.put("/", isAuthenticated, async (req, res) => {
     .catch((err) => res.send(createError(404, "User with this ID was found")));
 });
 
+
+router.put("/change-role", isAuthenticated, isAdmin, async (req, res) => {
+  User.findOneAndUpdate({ _id:req.body.userId }, {role:req.body.role}, { new: true })
+    .then((user) =>
+      res.send(
+        createSuccess(
+          _.pick(user, [
+            "firstName",
+            "lastName",
+            "email",
+            "_id",
+            "isAdmin",
+            "createdAt",
+          ])
+        )
+      )
+    )
+    .catch((err) => res.send(createError(404, "User with this ID was found")));
+});
+
+// 
+
 router.delete("/:id", isAuthenticated, async (req, res) => {
   if (!req.user.isAdmin || req.params.id !== req.user._id) {
     return res.send(createError(403, "Action unauthorised"));
