@@ -30,11 +30,15 @@ export default function Dashboard() {
         role,
       });
 
-      if (resp.data.success)
+      if (resp.data.success) {
         toast.success(`Successfuly changed user role to "${role}"`, {
           id: toastId,
         });
-      else toast.error(resp.data.message, { id: toastId });
+        let usersClone = [...users];
+        let index = usersClone.findIndex((user) => user._id === userId);
+        usersClone[index].role = role;
+        setusers([...usersClone]);
+      } else toast.error(resp.data.message, { id: toastId });
     } catch (error) {
       // @ts-ignore
       toast.error(error.message || "Failed to change usertype", {
