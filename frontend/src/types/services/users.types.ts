@@ -14,3 +14,8 @@ export interface UserInfo extends Table, BasicUserInfo {
   role: string;
   profileImage: string;
 }
+
+export interface IChangeUserRole {
+  userId: string;
+  role: string;
+}

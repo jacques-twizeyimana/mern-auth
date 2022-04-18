@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/auth/Logout";
 import EditProfile from "./pages/auth/EditProfile";
 import Messages from "./pages/Messages";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="auth">
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />

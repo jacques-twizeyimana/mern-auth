@@ -16,6 +16,13 @@ export default function Navbar() {
       { text: "Profile", to: "/auth/profile" },
       { text: "Messages", to: "/messages" },
     ];
+
+    if (user.role === "ADMIN")
+      links.push({
+        text: "Dashboard",
+        to: "/dashboard",
+      });
+
   } else {
     links = [
       { text: "Home", to: "/" },
