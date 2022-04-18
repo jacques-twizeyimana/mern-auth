@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { createError } = require("../htpp-response");
 
 function isAdmin(req, res, next) {
-  if (req.user.role === "ADMIN")
+  if (req.user.role !== "ADMIN")
     return res
       .status(401)
       .send(
