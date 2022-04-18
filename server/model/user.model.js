@@ -30,7 +30,7 @@ var userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      default: "USER",
+      default: "ADMIN",
     },
     profileImage: {
       type: String,
