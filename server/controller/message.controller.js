@@ -34,7 +34,7 @@ router.post("/", isAuthenticated, async (req, res) => {
       .populate("receiverId")
       .populate("senderId");
     // emit new message event
-    io.emit("newMessage", populatedMessage);
+    // io.emit("newMessage", populatedMessage);
 
     return res.send(createSuccess(populatedMessage));
   } catch (error) {
